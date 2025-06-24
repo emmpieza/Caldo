@@ -62,7 +62,7 @@ Aplicación para **generar videos automáticos** con IA, incluyendo música, im�
 
 1. **Clona el repositorio**
    ```bash
-   git clone <tu-repositorio>
+   git clone [https://github.com/emmpieza/Caldo.git]
    cd video-api
    ```
 
@@ -160,10 +160,8 @@ wget http://localhost:8000/media/video_final_abc123def456.mp4
 Puedes personalizar la configuración creando un archivo `.env`:
 
 ```env
-DEBUG=False
-SECRET_KEY=tu-secret-key-aqui
-ALLOWED_HOSTS=localhost,127.0.0.1
-DATABASE_URL=sqlite:///db.sqlite3
+HF_HUB_DOWNLOAD_CHUNK_SIZE=262144
+HF_HUB_DOWNLOAD_TIMEOUT=600
 ```
 
 ### Logs
