@@ -225,9 +225,8 @@ Este software es **propietario** y está bajo licencia de emmpieza.com.
 ## 📞 Soporte
 
 Para soporte técnico o consultas:
-- Email: soporte@emmpieza.com
-- Documentación interna: [Enlace interno]
+- Email: emmpieza@gmail.com
 
 ---
 
-**Desarrollado con ❤️ por el equipo de emmpieza.co
+**Desarrollado con ❤️ por el equipo de emmpieza.com
