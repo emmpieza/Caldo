@@ -1,99 +1,235 @@
 # Caldo
-API de Creación de Videos con Django y Docker
-https://img.shields.io/badge/Licencia-Privada-blue.svg
+# API de Creación de Videos con Django y Docker
 
-Aplicación para generar videos automáticos con IA, incluyendo música, imágenes, voces en español y subtítulos, todo dentro de un contenedor Docker.
+![Licencia](https://img.shields.io/badge/Licencia-Privada-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.8+-green.svg)
+![Django](https://img.shields.io/badge/Django-4.0+-blue.svg)
+![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)
 
-🚀 Características
-🎵 Generador de música a partir de prompts de texto
+Aplicación para **generar videos automáticos** con IA, incluyendo música, imágenes, voces en español y subtítulos, todo dentro de un contenedor Docker.
 
-🖼️ Creación de imágenes con modelos de IA
+## 🚀 Características
 
-🔊 Síntesis de voz en español a partir de texto
+- 🎵 **Generador de música** a partir de prompts de texto
+- 🖼️ **Creación de imágenes** con modelos de IA
+- 🔊 **Síntesis de voz** en español a partir de texto
+- 🎬 **Composición automática de videos** con subtítulos
+- 📦 **Empaquetado en Docker** para fácil despliegue
+- 🔌 **API REST** con dos endpoints simples
 
-🎬 Composición automática de videos con subtítulos
+## 📡 Endpoints de la API
 
-📦 Empaquetado en Docker para fácil despliegue
+### 1. Iniciar creación de video
 
-🔌 API REST con dos endpoints simples
+**Método**: `POST http://localhost:8000/start_video_creation/`
 
-📡 Endpoints de la API
-1. Iniciar creación de video
-Método: POST http://host.docker.internal:8000/start_video_creation/
-
-Parámetros (JSON):
-
-json
+**Parámetros (JSON)**:
+```json
 {  
     "texto": "El texto que aparecerá en el video y se convertirá en voz",  
     "music_prompt": "Ej: 'música épica para un viaje al espacio'"  
-}  
-Respuesta:
+}
+```
 
-json
+**Respuesta**:
+```json
 {  
     "task_id": "ID_UNICO",  
     "status": "processing"  
-}  
-2. Consultar estado del video
-Método: GET http://host.docker.internal:8000/video_status/<task_id>/
+}
+```
 
-Respuesta:
+### 2. Consultar estado del video
 
-json
+**Método**: `GET http://localhost:8000/video_status/<task_id>/`
+
+**Respuesta**:
+```json
 {  
     "status": "completed|processing|failed",  
     "video_url": "ruta/video_final_12345.mp4 (si está listo)"  
-}  
-🐳 Configuración con Docker
-Requisitos previos
-Docker instalado
+}
+```
 
-Docker Compose instalado
+## 🐳 Configuración con Docker
 
-🛠️ Instalación
-Clona el repositorio
+### Requisitos previos
 
-Construye la imagen Docker:
+- Docker instalado
+- Docker Compose instalado
 
-bash
-docker-compose build  
-Inicia el contenedor:
+### 🛠️ Instalación
 
-bash
-docker-compose up -d  
-La API estará disponible en: http://host.docker.internal:8000/
+1. **Clona el repositorio**
+   ```bash
+   git clone <tu-repositorio>
+   cd video-api
+   ```
 
-📂 Estructura de archivos
-text
-.  
-├── Dockerfile                # Configuración de Docker  
-├── docker-compose.yml        # Definición de servicios  
-├── app/                      # Aplicación Django  
-│   ├── modelos_ia/           # Modelos de IA  
-│   ├── media/                # Archivos generados  
-│   │   └── video_final_*.mp4 # Videos finales  
-│   └── ...                   # Otros archivos Django  
-└── requirements.txt          # Dependencias Python  
-📜 Licencia
-Este software es propietario y está bajo licencia de emmpieza.com.
+2. **Construye la imagen Docker**:
+   ```bash
+   docker-compose build
+   ```
 
-Prohibido su uso, distribución o modificación sin autorización expresa.
+3. **Inicia el contenedor**:
+   ```bash
+   docker-compose up -d
+   ```
 
-© 2023 emmpieza.com - Todos los derechos reservados.
+4. **Verifica que esté funcionando**:
+   ```bash
+   curl http://localhost:8000/
+   ```
 
-💡 Ejemplo de Uso
-Solicitar creación:
+La API estará disponible en: `http://localhost:8000/`
 
-bash
-curl -X POST http://localhost:8000/start_video_creation/ \  
-     -H "Content-Type: application/json" \  
-     -d '{"texto":"Un tutorial sobre Django","music_prompt":"música relajante para programar"}'  
-Verificar progreso:
+## 📂 Estructura de archivos
 
-bash
-curl http://localhost:8000/video_status/ID_RECIBIDO/  
-Descargar video: (Cuando status = "completed")
+```
+.
+├── Dockerfile                # Configuración de Docker
+├── docker-compose.yml        # Definición de servicios
+├── requirements.txt          # Dependencias Python
+├── README.md                 # Este archivo
+├── app/                      # Aplicación Django
+│   ├── settings.py           # Configuración Django
+│   ├── urls.py               # URLs de la API
+│   ├── views.py              # Lógica de endpoints
+│   ├── modelos_ia/           # Modelos de IA
+│   ├── media/                # Archivos generados
+│   │   └── video_final_*.mp4 # Videos finales
+│   └── ...                   # Otros archivos Django
+```
 
-bash
-wget http://localhost:8000/media/video_final_12345.mp4  
+## 💡 Ejemplo de Uso
+
+### 1. Solicitar creación de video
+
+```bash
+curl -X POST http://localhost:8000/start_video_creation/ \
+     -H "Content-Type: application/json" \
+     -d '{"texto":"Un tutorial sobre Django","music_prompt":"música relajante para programar"}'
+```
+
+**Respuesta esperada**:
+```json
+{
+    "task_id": "abc123def456",
+    "status": "processing"
+}
+```
+
+### 2. Verificar progreso
+
+```bash
+curl http://localhost:8000/video_status/abc123def456/
+```
+
+**Respuestas posibles**:
+```json
+// Procesando
+{
+    "status": "processing"
+}
+
+// Completado
+{
+    "status": "completed",
+    "video_url": "media/video_final_abc123def456.mp4"
+}
+
+// Error
+{
+    "status": "failed",
+    "error": "Descripción del error"
+}
+```
+
+### 3. Descargar video
+
+Una vez que el status sea `"completed"`:
+
+```bash
+wget http://localhost:8000/media/video_final_abc123def456.mp4
+```
+
+## 🔧 Configuración avanzada
+
+### Variables de entorno
+
+Puedes personalizar la configuración creando un archivo `.env`:
+
+```env
+DEBUG=False
+SECRET_KEY=tu-secret-key-aqui
+ALLOWED_HOSTS=localhost,127.0.0.1
+DATABASE_URL=sqlite:///db.sqlite3
+```
+
+### Logs
+
+Para ver los logs del contenedor:
+
+```bash
+docker-compose logs -f
+```
+
+## 🐛 Troubleshooting
+
+### Puerto ocupado
+Si el puerto 8000 está ocupado, cámbialo en `docker-compose.yml`:
+```yaml
+ports:
+  - "8001:8000"  # Usar puerto 8001 en lugar de 8000
+```
+
+### Problemas de permisos
+Si tienes problemas con permisos de archivos:
+```bash
+sudo chown -R $USER:$USER ./media/
+```
+
+### Reiniciar servicios
+Para reiniciar completamente:
+```bash
+docker-compose down
+docker-compose up -d --build
+```
+
+## 📊 Monitoreo
+
+### Estado de la API
+```bash
+curl http://localhost:8000/health/
+```
+
+### Métricas básicas
+```bash
+curl http://localhost:8000/stats/
+```
+
+## 🤝 Contribución
+
+Este es un proyecto privado. Para contribuir:
+
+1. Contacta con el equipo de desarrollo
+2. Solicita acceso al repositorio privado
+3. Sigue las guías de desarrollo internas
+
+## 📜 Licencia
+
+Este software es **propietario** y está bajo licencia de emmpieza.com.
+
+**Prohibido** su uso, distribución o modificación sin autorización expresa.
+
+© 2024 emmpieza.com - Todos los derechos reservados.
+
+## 📞 Soporte
+
+Para soporte técnico o consultas:
+- Email: soporte@emmpieza.com
+- Documentación interna: [Enlace interno]
+
+---
+
+**Desarrollado con ❤️ por el equipo de emmpieza.co
