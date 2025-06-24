@@ -6,6 +6,9 @@
 ![Django](https://img.shields.io/badge/Django-4.0+-blue.svg)
 ![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)
 
+
+https://github.com/emmpieza/Caldo/blob/main/video_final_1750719510.mp4
+
 Aplicación para **generar videos automáticos** con IA, incluyendo música, imágenes, voces en español y subtítulos, todo dentro de un contenedor Docker.
 
 ## 🚀 Características
